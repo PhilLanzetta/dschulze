@@ -74,20 +74,12 @@ main {
 
 .bordered {
   margin-top: 100px;
-  height: calc(100vh - 100px);
-  margin-bottom: 50px;
-  object-fit: contain;
 }
 
 .full-bleed {
-  min-height: 100vh;
-  min-width: 100vw;
-  object-fit: cover;
-}
-
-.bordered-img {
-  height: 100%;
-  width: auto;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 .mobile-links-container {
