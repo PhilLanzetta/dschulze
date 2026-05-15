@@ -3,7 +3,7 @@ import * as React from "react"
 const Header = () => (
   <header>
     <div className="header">
-      <a href="mailto:info@davidschulze.com" className="header-link">
+      <a href="mailto:studio@davidschulze.com" className="header-link">
         Email
       </a>
       <h1 className="title" translate="no">
