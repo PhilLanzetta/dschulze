@@ -44,13 +44,19 @@ const IndexPage = () => {
     setImageIndex(prev => (prev < slides.length - 1 ? prev + 1 : 0))
   }
 
+  if (viewport.width === 0 || viewport.height === 0) return null
+
   return (
     <>
       <Header />
       <main
         onClick={handleClick}
         aria-label="go to next slide"
-        style={{ position: "relative" }}
+        style={{
+          position: 'relative',
+          width: '100vw',
+          height: '100vh',
+        }}
       >
         {slides.map((item, index) => {
           const displayHeight = item.fullBleed
@@ -60,26 +66,30 @@ const IndexPage = () => {
             ? viewport.width
             : Math.round(displayHeight * (item.image.width / item.image.height))
 
+          if (!displayWidth || !displayHeight) return null
+
           const imageData = getImage({
             ...item.image.gatsbyImageData,
             width: displayWidth,
             height: displayHeight,
           })
 
+          if (!imageData) return null
+
           return (
             <div
               key={index}
               style={{
-                position: index === 0 ? "relative" : "absolute",
+                position: 'absolute',
                 top: 0,
                 left: 0,
-                width: "100%",
-                height: "100%",
+                width: '100%',
+                height: '100%',
                 opacity: index === imageIndex ? 1 : 0,
-                pointerEvents: index === imageIndex ? "auto" : "none",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
+                pointerEvents: index === imageIndex ? 'auto' : 'none',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
               }}
             >
               <GatsbyImage
