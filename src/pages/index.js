@@ -47,15 +47,12 @@ const IndexPage = () => {
   return (
     <>
       <Header />
-      <main onClick={handleClick} aria-label="go to next slide">
+      <main
+        onClick={handleClick}
+        aria-label="go to next slide"
+        style={{ position: "relative" }}
+      >
         {slides.map((item, index) => {
-          const isActive = index === imageIndex
-          const className = !isActive
-            ? "hide"
-            : item.fullBleed
-            ? "full-bleed"
-            : "bordered"
-
           const displayHeight = item.fullBleed
             ? viewport.height
             : viewport.height - 150
@@ -70,12 +67,24 @@ const IndexPage = () => {
           })
 
           return (
-            <GatsbyImage
+            <div
               key={index}
-              image={imageData}
-              alt=""
-              className={className}
-            />
+              style={{
+                position: index === 0 ? "relative" : "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                opacity: index === imageIndex ? 1 : 0,
+                pointerEvents: index === imageIndex ? "auto" : "none",
+              }}
+            >
+              <GatsbyImage
+                image={imageData}
+                alt=""
+                className={item.fullBleed ? "full-bleed" : "bordered"}
+              />
+            </div>
           )
         })}
       </main>
