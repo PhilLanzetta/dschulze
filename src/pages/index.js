@@ -77,6 +77,9 @@ const IndexPage = () => {
                 height: "100%",
                 opacity: index === imageIndex ? 1 : 0,
                 pointerEvents: index === imageIndex ? "auto" : "none",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
               <GatsbyImage
