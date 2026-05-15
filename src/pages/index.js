@@ -80,16 +80,18 @@ const IndexPage = () => {
             <div
               key={index}
               style={{
-                position: 'absolute',
+                position: "absolute",
                 top: 0,
                 left: 0,
-                width: '100%',
-                height: '100%',
+                width: "100%",
+                height: "100%",
                 opacity: index === imageIndex ? 1 : 0,
-                pointerEvents: index === imageIndex ? 'auto' : 'none',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
+                pointerEvents: index === imageIndex ? "auto" : "none",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                transition: "opacity 0.3s ease",
+                willChange: "opacity",
               }}
             >
               <GatsbyImage
