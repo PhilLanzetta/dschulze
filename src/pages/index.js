@@ -93,6 +93,7 @@ const IndexPage = () => {
                 width: "100%",
                 height: "100%",
                 zIndex: index === imageIndex ? 1 : 0,
+                visibility: index === imageIndex ? "visible" : "hidden",
                 pointerEvents: index === imageIndex ? "auto" : "none",
                 display: "flex",
                 justifyContent: "center",
