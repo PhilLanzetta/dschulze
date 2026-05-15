@@ -1,121 +1,69 @@
-import * as React from "react"
-import { Link } from "gatsby"
-import { StaticImage } from "gatsby-plugin-image"
-
-import Layout from "../components/layout"
+import React, { useState, useEffect } from "react"
+import Header from "../components/header"
 import Seo from "../components/seo"
-import * as styles from "../components/index.module.css"
+import image1 from "../images/DS1.png"
+import image2 from "../images/DS2.png"
+import image3 from "../images/DS3.png"
+import image4 from "../images/DS4.png"
+import image5 from "../images/DS5.png"
+import image6 from "../images/DS6.png"
 
-const links = [
-  {
-    text: "Tutorial",
-    url: "https://www.gatsbyjs.com/docs/tutorial",
-    description:
-      "A great place to get started if you're new to web development. Designed to guide you through setting up your first Gatsby site.",
-  },
-  {
-    text: "Examples",
-    url: "https://github.com/gatsbyjs/gatsby/tree/master/examples",
-    description:
-      "A collection of websites ranging from very basic to complex/complete that illustrate how to accomplish specific tasks within your Gatsby sites.",
-  },
-  {
-    text: "Plugin Library",
-    url: "https://www.gatsbyjs.com/plugins",
-    description:
-      "Learn how to add functionality and customize your Gatsby site or app with thousands of plugins built by our amazing developer community.",
-  },
-  {
-    text: "Build and Host",
-    url: "https://www.gatsbyjs.com/cloud",
-    description:
-      "Now you’re ready to show the world! Give your Gatsby site superpowers: Build and host on Gatsby Cloud. Get started for free!",
-  },
-]
+const IndexPage = () => {
+  const [imageIndex, setImageIndex] = useState(0)
+  const data = [
+    { src: image1, fullBleed: false },
+    { src: image2, fullBleed: false },
+    { src: image3, fullBleed: true },
+    { src: image4, fullBleed: false },
+    { src: image5, fullBleed: true },
+    { src: image6, fullBleed: false },
+  ]
 
-const samplePageLinks = [
-  {
-    text: "Page 2",
-    url: "page-2",
-    badge: false,
-    description:
-      "A simple example of linking to another page within a Gatsby site",
-  },
-  { text: "TypeScript", url: "using-typescript" },
-  { text: "Server Side Rendering", url: "using-ssr" },
-  { text: "Deferred Static Generation", url: "using-dsg" },
-]
+  const handleClick = () => {
+    if (imageIndex < data.length - 1) {
+      setImageIndex(prev => prev + 1)
+    } else {
+      setImageIndex(0)
+    }
+  }
 
-const moreLinks = [
-  {
-    text: "Documentation",
-    url: "https://gatsbyjs.com/docs/",
-  },
-  {
-    text: "Starters",
-    url: "https://gatsbyjs.com/starters/",
-  },
-  {
-    text: "Showcase",
-    url: "https://gatsbyjs.com/showcase/",
-  },
-  {
-    text: "Contributing",
-    url: "https://www.gatsbyjs.com/contributing/",
-  },
-  { text: "Issues", url: "https://github.com/gatsbyjs/gatsby/issues" },
-]
+  useEffect(() => {
+    // Set up the interval
+    const intervalId = setInterval(() => {
+      // Use the functional update form of setCount to ensure you're using the latest state
+      if (imageIndex < data.length - 1) {
+        setImageIndex(prev => prev + 1)
+      } else {
+        setImageIndex(0)
+      }
+    }, 3000) // Update every 1000 milliseconds (1 second)
 
-const utmParameters = `?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter`
+    // Clean up the interval when the component unmounts or the effect re-runs
+    return () => clearInterval(intervalId)
+  }, [imageIndex]) // Empty dependency array ensures the effect runs only once on mount and cleans up on unmount
 
-const IndexPage = () => (
-  <Layout>
-    <div className={styles.textCenter}>
-      <StaticImage
-        src="../images/example.png"
-        loading="eager"
-        width={64}
-        quality={95}
-        formats={["auto", "webp", "avif"]}
-        alt=""
-        style={{ marginBottom: `var(--space-3)` }}
-      />
-      <h1>
-        Welcome to <b>Gatsby!</b>
-      </h1>
-      <p className={styles.intro}>
-        <b>Example pages:</b>{" "}
-        {samplePageLinks.map((link, i) => (
-          <React.Fragment key={link.url}>
-            <Link to={link.url}>{link.text}</Link>
-            {i !== samplePageLinks.length - 1 && <> · </>}
-          </React.Fragment>
+  return (
+    <>
+      <Header></Header>
+      <main onClick={handleClick} aria-label="go to next slide">
+        {data.map((item, index) => (
+          <img
+            key={index}
+            src={item.src}
+            alt=""
+            className={
+              index !== imageIndex
+                ? "hide"
+                : item.fullBleed
+                ? "full-bleed"
+                : "bordered"
+            }
+          ></img>
         ))}
-        <br />
-        Edit <code>src/pages/index.js</code> to update this page.
-      </p>
-    </div>
-    <ul className={styles.list}>
-      {links.map(link => (
-        <li key={link.url} className={styles.listItem}>
-          <a
-            className={styles.listItemLink}
-            href={`${link.url}${utmParameters}`}
-          >
-            {link.text} ↗
-          </a>
-          <p className={styles.listItemDescription}>{link.description}</p>
-        </li>
-      ))}
-    </ul>
-    {moreLinks.map((link, i) => (
-      <React.Fragment key={link.url}>
-        <a href={`${link.url}${utmParameters}`}>{link.text}</a>
-        {i !== moreLinks.length - 1 && <> · </>}
-      </React.Fragment>
-    ))}
-  </Layout>
-)
+      </main>
+    </>
+  )
+}
 
 /**
  * Head export to define metadata for the page

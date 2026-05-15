@@ -1,0 +1,126 @@
+@font-face {
+  font-family: "ABC";
+  src: url(./fonts/ABCSynt-Regular-Trial.woff2) format("woff2");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ABC";
+  src: url(./fonts/ABCSynt-Italic-Trial.woff2) format("woff2");
+  font-weight: 400;
+  font-style: italic;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: "ABC", serif;
+}
+
+img {
+  user-select: none;
+  -webkit-user-select: none; /* For older Safari and Chrome */
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 100vw;
+  padding: 25px;
+  text-transform: uppercase;
+  font-size: 28px;
+  z-index: 10;
+}
+
+.header-link,
+.mobile-header-link {
+  text-transform: uppercase;
+  font-style: italic;
+  color: inherit;
+  text-decoration: none;
+  font-weight: normal;
+}
+
+.instagram {
+  text-align: right;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: normal;
+  text-align: center;
+}
+
+main {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.hide {
+  display: none;
+}
+
+.bordered {
+  margin-top: 100px;
+  height: calc(100vh - 100px);
+  margin-bottom: 50px;
+  object-fit: contain;
+}
+
+.full-bleed {
+  min-height: 100vh;
+  min-width: 100vw;
+  object-fit: cover;
+}
+
+.bordered-img {
+  height: 100%;
+  width: auto;
+}
+
+.mobile-links-container {
+  display: none;
+}
+
+@media screen and (max-width: 760px) {
+  .header,
+  .title {
+    font-size: 16px;
+  }
+
+  .bordered {
+    max-width: calc(100vw - 40px);
+    margin-top: 0;
+    height: 100vh;
+  }
+
+  .header-link {
+    display: none;
+  }
+
+  .mobile-links-container {
+    display: flex;
+    padding: 25px;
+    justify-content: space-between;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+  }
+
+  .header {
+    grid-template-columns: 1fr;
+  }
+}
