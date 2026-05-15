@@ -19,7 +19,7 @@ const Header = () => (
       </a>
     </div>
     <div className="mobile-links-container">
-      <a href="mailto:info@davidschulze.com" className="mobile-header-link">
+      <a href="mailto:studio@davidschulze.com" className="mobile-header-link">
         Email
       </a>
       <a
