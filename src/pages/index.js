@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useMemo } from "react"
 import { useStaticQuery, graphql } from "gatsby"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 import Header from "../components/header"
@@ -13,7 +13,7 @@ const IndexPage = () => {
       contentfulSplashPage {
         images {
           image {
-            gatsbyImageData(layout: FIXED, placeholder: BLURRED)
+            gatsbyImageData(layout: FIXED, placeholder: DOMINANT_COLOR)
             width
             height
           }
@@ -44,7 +44,29 @@ const IndexPage = () => {
     setImageIndex(prev => (prev < slides.length - 1 ? prev + 1 : 0))
   }
 
-  if (viewport.width === 0 || viewport.height === 0) return null
+  const processedSlides = useMemo(() => {
+    if (viewport.width === 0 || viewport.height === 0) return []
+
+    return slides.map(item => {
+      const displayHeight = item.fullBleed
+        ? viewport.height
+        : viewport.height - 150
+      const displayWidth = item.fullBleed
+        ? viewport.width
+        : Math.round(displayHeight * (item.image.width / item.image.height))
+
+      return {
+        ...item,
+        imageData: getImage({
+          ...item.image.gatsbyImageData,
+          width: displayWidth,
+          height: displayHeight,
+        }),
+      }
+    })
+  }, [viewport, slides])
+
+  if (processedSlides.length === 0) return null
 
   return (
     <>
@@ -53,28 +75,13 @@ const IndexPage = () => {
         onClick={handleClick}
         aria-label="go to next slide"
         style={{
-          position: 'relative',
-          width: '100vw',
-          height: '100vh',
+          position: "relative",
+          width: "100vw",
+          height: "100vh",
         }}
       >
-        {slides.map((item, index) => {
-          const displayHeight = item.fullBleed
-            ? viewport.height
-            : viewport.height - 150
-          const displayWidth = item.fullBleed
-            ? viewport.width
-            : Math.round(displayHeight * (item.image.width / item.image.height))
-
-          if (!displayWidth || !displayHeight) return null
-
-          const imageData = getImage({
-            ...item.image.gatsbyImageData,
-            width: displayWidth,
-            height: displayHeight,
-          })
-
-          if (!imageData) return null
+        {processedSlides.map((item, index) => {
+          if (!item.imageData) return null
 
           return (
             <div
@@ -85,17 +92,15 @@ const IndexPage = () => {
                 left: 0,
                 width: "100%",
                 height: "100%",
-                opacity: index === imageIndex ? 1 : 0,
+                zIndex: index === imageIndex ? 1 : 0,
                 pointerEvents: index === imageIndex ? "auto" : "none",
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                transition: "opacity 0.3s ease",
-                willChange: "opacity",
               }}
             >
               <GatsbyImage
-                image={imageData}
+                image={item.imageData}
                 alt=""
                 className={item.fullBleed ? "full-bleed" : "bordered"}
               />
