@@ -1,13 +1,13 @@
 @font-face {
   font-family: "ABC";
-  src: url(./fonts/ABCSynt-Regular-Trial.woff2) format("woff2");
+  src: url(./Fonts/ABCSynt-Regular-Trial.woff2) format("woff2");
   font-weight: 400;
   font-style: normal;
 }
 
 @font-face {
   font-family: "ABC";
-  src: url(./fonts/ABCSynt-Italic-Trial.woff2) format("woff2");
+  src: url(./Fonts/ABCSynt-Italic-Trial.woff2) format("woff2");
   font-weight: 400;
   font-style: italic;
 }
